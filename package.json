@@ -1,0 +1,19 @@
+{
+  "name": "kfmd",
+  "version": "1.0.0",
+  "description": "A markdown ",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kfdykme/kfmd.git"
+  },
+  "author": "kfdykme",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kfdykme/kfmd/issues"
+  },
+  "homepage": "https://github.com/kfdykme/kfmd#readme"
+}
