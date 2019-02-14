@@ -1,10 +1,11 @@
 {
   "name": "kfmd",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A markdown ",
   "main": "src/index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/test.js",
+    "buildcss": "node test/css.js"
   },
   "repository": {
     "type": "git",
