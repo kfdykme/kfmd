@@ -1,11 +1,12 @@
 {
   "name": "kfmd",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "description": "A markdown ",
   "main": "src/index.js",
   "scripts": {
-    "test": "node test/test.js",
-    "buildcss": "node test/css.js"
+    "build": "node test/test.js",
+    "buildcss": "node test/css.js",
+    "test": "npm run buildcss && npm run build"
   },
   "repository": {
     "type": "git",

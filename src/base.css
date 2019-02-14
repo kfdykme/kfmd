@@ -3,5 +3,21 @@ h1, h2, h3, h4, h5, h6, li, p {
 }
 
 ul, ol {
-  list-style-type: none;
+  /* list-style-type: none; */
+}
+
+blockquote {
+}
+
+blockquote p {
+  background-color: #dddddd;
+  color: #333333;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+
+a {
+  text-decoration: none;
+  color: deeppink;
 }
