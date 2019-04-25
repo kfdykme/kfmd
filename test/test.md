@@ -1,14 +1,57 @@
-# 欢迎使用马克飞象
+# Heading level 1
+## Heading level 2
+### Heading level 3
+#### Heading level 4
+##### Heading level 5
+###### Heading level 6
 
-@(示例笔记本)[马克飞象|帮助|Markdown]
+Heading level 1
+===============
+Heading level 2
+---------------
 
-**马克飞象**是一款专为印象笔记（Evernote）打造的Markdown编辑器，通过精心的设计与技术实现，配合印象笔记强大的存储和同步功能，带来前所未有的书写体验。特点概述：
+I really like using Markdown.
 
-- **功能丰富** ：支持高亮代码块、*LaTeX* 公式、流程图，本地图片以及附件上传，甚至截图粘贴，工作学习好帮手；
-- **得心应手** ：简洁高效的编辑器，提供[桌面客户端][1]以及[离线Chrome App][2]，支持移动端 Web；
-- **深度整合** ：支持选择笔记本和添加标签，支持从印象笔记跳转编辑，轻松管理。
+I think I'll use it to format all of my documents from now on.
 
--------------------
 
-> 就看到了就ask来得及卡了就是打开拉萨你的快乐健康是垃圾的卡拉角度上来看利空打击ask大家阿喀琉斯的洒家扩大了
-# 4
+Markdown	HTML	Rendered Output
+I just love **bold text**.
+I just love __bold text__.
+Love**is**bold
+
+
+
+Italicized text is the *cat's meow*.
+Italicized text is the _cat's meow_.
+A*cat*meow
+
+This text is ***really important***.
+This text is ___really important___.
+This text is __*really important*__.
+This text is **_really important_**.
+
+1. First item
+2. Second item
+3. Third item
+    1. Indented item
+    2. Indented item
+4. Fourth item
+
+- First item
+- Second item
+- Third item
+- Fourth item
+
+- 1
+  - 1.1
+    - 1.1.1
+    - 1.1.2
+  - 1.2
+    - 1.2.1
+- 2
+  - 2.2
+- 3
+- 4
+
+![Philadelphia's Magic Gardens. This place was so cool!](https://www.markdownguide.org/basic-syntax/assets/images/philly-magic-gardens.jpg "Philadelphia's Magic Gardens")
