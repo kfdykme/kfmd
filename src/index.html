@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /> 
+    <title>Kfmd Webview: </title>
+  </head>
+  <body >
+    <!-- <webview id="foo" src="http://blog.kfdykme.life" style="display:inline-flex; width:640px; height:480px"></webview> -->
+    <input type="text" id="url" />
+    <input type="button" value="enter" id="btnUrl" />
+    <iframe sandbox="allow-same-origin allow-scripts allow-popups allow-forms" src="http://www.bing.com" width="100%" id="webview" height="960px"> </iframe>
+    <script>
+      const btn = document.getElementById("btnUrl");
+      const inputUrl = document.getElementById("url");
+      const webview = document.getElementById("webview");
+      btn.onclick = () => {
+        let value = inputUrl.value;
+        
+        if (!value.startsWith('http://')) {
+            value = 'http://' + value
+        }
+
+        webview.src = value
+
+        
+      };
+    </script>
+  </body>
+</html>
