@@ -3,7 +3,8 @@
 	"displayName": "kfmd",
 	"description": "a tool for markdown",
 	"publisher": "kfdykme",
-	"icon": "kfydkme.jpg",
+	"icon": "kfdykme.jpg",
+	"repository": "https://github.com/kfdykme/kfmd",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.61.0"
