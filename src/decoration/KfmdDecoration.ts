@@ -8,6 +8,7 @@ let doneArr: vscode.DecorationOptions[] = [];
 const createBasicKfmdLineDecoration = (backgroundColor: string) => {
   return vscode.window.createTextEditorDecorationType({
     isWholeLine: true,
+    rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
     light: {
       backgroundColor,
     },
@@ -20,6 +21,8 @@ const createBasicKfmdLineDecoration = (backgroundColor: string) => {
 let todoDecorationType = createBasicKfmdLineDecoration(todoBackgroundColor);
 
 let doneDecorationType = createBasicKfmdLineDecoration(doneBackgroundColor);
+
+let lastDocument: vscode.TextDocument | undefined = undefined;
 
 // Deprecated
 const bindDecoration = (
@@ -45,29 +48,52 @@ const bindDecoration = (
 };
 const bindTodoDecoration = (range: vscode.Range) => {
   //   bindDecoration(range, todoDecorationType);
+  if (activeEditor?.document != lastDocument) {
+    todoArr = []
+  }
+
   todoArr.push({
     range,
   });
+  lastDocument = activeEditor?.document
 };
 const bindDoneDecoration = (range: vscode.Range) => {
   //   bindDecoration(range, doneDecorationType);
+  if (activeEditor?.document != lastDocument) {
+    doneArr = []
+  }
+
   doneArr.push({
     range,
   });
+
+  lastDocument = activeEditor?.document
 };
 
 let activeEditor = vscode.window.activeTextEditor;
 const updateDecorations = () => {
+  const startTime = new Date().getTime()
   todoBackgroundColor = vscode.workspace.getConfiguration("kfmd").get("todoBackgroundColor", todoBackgroundColor)
   doneBackgroundColor = vscode.workspace.getConfiguration("kfmd").get("doneBackgroundColor", doneBackgroundColor)
 
   todoDecorationType = createBasicKfmdLineDecoration(todoBackgroundColor)
   doneDecorationType = createBasicKfmdLineDecoration(doneBackgroundColor)
 
+
+  activeEditor?.setDecorations(vscode.window.createTextEditorDecorationType({}), [
+    {
+      range: new vscode.Range(new vscode.Position(0, 0), new vscode.Position(activeEditor.document.lineCount, 0)
+      )
+    }
+  ])
   activeEditor?.setDecorations(todoDecorationType, todoArr);
   activeEditor?.setDecorations(doneDecorationType, doneArr);
+  console.info(`KfmdDecoration todoDecorationType ${JSON.stringify(todoArr.map((r: vscode.DecorationOptions) => r.range.start.line + 1))}`)
   todoArr = [];
   doneArr = [];
+
+  const endTime = new Date().getTime()
+  console.info(`KfmdDecoration update coast ${endTime - startTime}ms`)
 };
 
 let timeout: NodeJS.Timer | undefined = undefined;

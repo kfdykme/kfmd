@@ -5,7 +5,7 @@
 	"publisher": "kfdykme",
 	"icon": "kfdykme.jpg",
 	"repository": "https://github.com/kfdykme/kfmd",
-	"version": "0.0.2",
+	"version": "0.0.4",
 	"engines": {
 		"vscode": "^1.61.0"
 	},
