@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
-const todoBackgroundColor = "#00bcd499";
-const doneBackgroundColor = "#AD4045";
+let todoBackgroundColor = "#00bcd499";
+let doneBackgroundColor = "#AD4045";
 let todoArr: vscode.DecorationOptions[] = [];
 let doneArr: vscode.DecorationOptions[] = [];
 
@@ -17,9 +17,9 @@ const createBasicKfmdLineDecoration = (backgroundColor: string) => {
   });
 };
 
-const todoDecorationType = createBasicKfmdLineDecoration(todoBackgroundColor);
+let todoDecorationType = createBasicKfmdLineDecoration(todoBackgroundColor);
 
-const doneDecorationType = createBasicKfmdLineDecoration(doneBackgroundColor);
+let doneDecorationType = createBasicKfmdLineDecoration(doneBackgroundColor);
 
 // Deprecated
 const bindDecoration = (
@@ -58,6 +58,12 @@ const bindDoneDecoration = (range: vscode.Range) => {
 
 let activeEditor = vscode.window.activeTextEditor;
 const updateDecorations = () => {
+  todoBackgroundColor = vscode.workspace.getConfiguration("kfmd").get("todoBackgroundColor", todoBackgroundColor)
+  doneBackgroundColor = vscode.workspace.getConfiguration("kfmd").get("doneBackgroundColor", doneBackgroundColor)
+
+  todoDecorationType = createBasicKfmdLineDecoration(todoBackgroundColor)
+  doneDecorationType = createBasicKfmdLineDecoration(doneBackgroundColor)
+
   activeEditor?.setDecorations(todoDecorationType, todoArr);
   activeEditor?.setDecorations(doneDecorationType, doneArr);
   todoArr = [];

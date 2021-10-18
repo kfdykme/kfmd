@@ -1,6 +1,5 @@
 # kfmd
 
-This is the README for your extension "kfmd"
 ## Features
 
 - help you manager you markdown todo list by codelen
@@ -23,21 +22,21 @@ If you have any requirements or dependencies, add a section describing those and
 
 Calling out known issues can help limit users opening duplicate issues against your extension. -->
 
-<!-- ## Release Notes
+## Release Notes
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### 0.0.1
 
-Initial release of ...
+- Init 
 
-### 1.0.1
+### 0.0.2
 
-Fixed issue #.
+- Add Settings to change todo/done background color
 
 ### 1.1.0
 
-Added features X, Y, and Z. -->
+Added features X, Y, and Z.
 
 -----------------------------------------------------------------------------------------------------------
 

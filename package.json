@@ -5,7 +5,7 @@
 	"publisher": "kfdykme",
 	"icon": "kfdykme.jpg",
 	"repository": "https://github.com/kfdykme/kfmd",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.61.0"
 	},
@@ -40,7 +40,15 @@
                 "kfmd.enableCodeLens": {
                     "type": "boolean",
                     "default": true
-                }
+                },
+				"kfmd.todoBackgroundColor": {
+					"type": "string",
+					"default": "#00bcd499"
+				},
+				"kfmd.doneBackgroundColor": {
+					"type": "string",
+					"default": "#AD4045"
+				}
             }
         }
 	},
