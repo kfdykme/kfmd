@@ -5,22 +5,38 @@ let doneBackgroundColor = "#AD4045";
 let todoArr: vscode.DecorationOptions[] = [];
 let doneArr: vscode.DecorationOptions[] = [];
 
-const createBasicKfmdLineDecoration = (backgroundColor: string) => {
+let mContext: vscode.ExtensionContext | null = null;
+let doneGutterIconPath: string = ''
+let todoGutterIconPath: string = ''
+const createBasicKfmdLineDecoration = (backgroundColor: string, gutterIconPath: string = '') => {
+  console.info(`createBasicKfmdLineDecoration gutterIconPath ${gutterIconPath}`);
+
+  if (!vscode.workspace.getConfiguration("kfmd").get("decoration.showIcon", false)) {
+    gutterIconPath = ''
+  }
+
   return vscode.window.createTextEditorDecorationType({
-    isWholeLine: true,
+    isWholeLine: vscode.workspace
+      .getConfiguration("kfmd")
+      .get("isWholeLine", true),
     rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed,
     light: {
       backgroundColor,
     },
     dark: {
       backgroundColor,
+      borderRadius: "4px",
+      borderColor: backgroundColor,
+      borderSpacing: "4px",
+      gutterIconPath: gutterIconPath,
+      letterSpacing: "2px",
     },
   });
 };
 
-let todoDecorationType = createBasicKfmdLineDecoration(todoBackgroundColor);
+let todoDecorationType = createBasicKfmdLineDecoration(todoBackgroundColor, 'C:\\Users\\kfmechen\\Desktop\\wor\\kfmd\\res\\todolist_done.svg');
 
-let doneDecorationType = createBasicKfmdLineDecoration(doneBackgroundColor);
+let doneDecorationType = createBasicKfmdLineDecoration(doneBackgroundColor, 'C:\\Users\\kfmechen\\Desktop\\wor\\kfmd\\res\\todolist_done.svg');
 
 let lastDocument: vscode.TextDocument | undefined = undefined;
 
@@ -48,7 +64,7 @@ const bindDecoration = (
 };
 const bindTodoDecoration = (range: vscode.Range) => {
   //   bindDecoration(range, todoDecorationType);
-  if (activeEditor?.document != lastDocument) {
+  if (activeEditor?.document != lastDocument && lastDocument !== undefined) {
     todoArr = []
   }
 
@@ -73,27 +89,42 @@ const bindDoneDecoration = (range: vscode.Range) => {
 let activeEditor = vscode.window.activeTextEditor;
 const updateDecorations = () => {
   const startTime = new Date().getTime()
-  todoBackgroundColor = vscode.workspace.getConfiguration("kfmd").get("todoBackgroundColor", todoBackgroundColor)
-  doneBackgroundColor = vscode.workspace.getConfiguration("kfmd").get("doneBackgroundColor", doneBackgroundColor)
+  todoBackgroundColor = vscode.workspace.getConfiguration("kfmd").get("todoBackgroundColor")!!
+  doneBackgroundColor = vscode.workspace.getConfiguration("kfmd").get("doneBackgroundColor")!!
 
-  todoDecorationType = createBasicKfmdLineDecoration(todoBackgroundColor)
-  doneDecorationType = createBasicKfmdLineDecoration(doneBackgroundColor)
+  todoDecorationType = createBasicKfmdLineDecoration(todoBackgroundColor, todoGutterIconPath)
+  doneDecorationType = createBasicKfmdLineDecoration(doneBackgroundColor, doneGutterIconPath)
 
-
-  activeEditor?.setDecorations(vscode.window.createTextEditorDecorationType({}), [
+  activeEditor?.setDecorations(vscode.window.createTextEditorDecorationType({
+    dark: {
+      gutterIconPath: ''
+    }
+  }), [
     {
       range: new vscode.Range(new vscode.Position(0, 0), new vscode.Position(activeEditor.document.lineCount, 0)
       )
     }
   ])
-  activeEditor?.setDecorations(todoDecorationType, todoArr);
-  activeEditor?.setDecorations(doneDecorationType, doneArr);
-  console.info(`KfmdDecoration todoDecorationType ${JSON.stringify(todoArr.map((r: vscode.DecorationOptions) => r.range.start.line + 1))}`)
-  todoArr = [];
-  doneArr = [];
 
-  const endTime = new Date().getTime()
-  console.info(`KfmdDecoration update coast ${endTime - startTime}ms`)
+  const current =
+    vscode.workspace
+      .getConfiguration("kfmd")
+      .get("enableShowBackgroundColor", true);
+
+  console.info(`KfmdDecoration todoDecorationType ${JSON.stringify(todoArr.map((r: vscode.DecorationOptions) => r.range.start.line + 1))}`)
+  if (current) {
+    activeEditor?.setDecorations(todoDecorationType, todoArr);
+    activeEditor?.setDecorations(doneDecorationType, doneArr);
+    todoArr = [];
+    doneArr = [];
+
+    const endTime = new Date().getTime()
+    console.info(`KfmdDecoration update coast ${endTime - startTime}ms`)
+  } else {
+
+    console.info(`KfmdDecoration disenable`)
+  }
+
 };
 
 let timeout: NodeJS.Timer | undefined = undefined;
@@ -105,7 +136,11 @@ const triggerUpdateDecorations = () => {
   timeout = setTimeout(updateDecorations, 500);
 };
 
+
 const initDecoration = (context: vscode.ExtensionContext) => {
+  mContext = context;
+  doneGutterIconPath = mContext?.asAbsolutePath('res/todolist_done.svg')
+  todoGutterIconPath = mContext?.asAbsolutePath('res/todolist_todo.svg')
   vscode.window.onDidChangeActiveTextEditor(
     (editor) => {
       activeEditor = editor;
@@ -135,6 +170,6 @@ const initDecoration = (context: vscode.ExtensionContext) => {
 export {
   bindTodoDecoration,
   bindDoneDecoration,
-  updateDecorations,
+  triggerUpdateDecorations,
   initDecoration,
 };

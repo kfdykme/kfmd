@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { KfmdCodelensProvider } from "./codelens/KfmdCodelensProvider";
-import { initDecoration } from "./decoration/KfmdDecoration";
+import { initDecoration, triggerUpdateDecorations } from "./decoration/KfmdDecoration";
 
 const viewType = "kfmd";
 
@@ -52,14 +52,14 @@ const bindCommand = (
 // 		  const webview = document.getElementById("webview");
 // 		  btn.onclick = () => {
 // 			let value = inputUrl.value;
-			
+
 // 			if (!value.startsWith('http://')) {
 // 				value = 'http://' + value
 // 			}
-	
+
 // 			webview.src = value
-	
-			
+
+
 // 		  };
 // 		</script>
 // 	  </body>
@@ -112,21 +112,35 @@ export function activate(context: vscode.ExtensionContext) {
       .update("enableCodeLens", false, true);
   });
 
-//   bindCommand(context, "kfmd.helloWorld", () => {
-//     // The code you place here will be executed every time your command is executed
-//     // Display a message box to the user
-//     vscode.window.showInformationMessage("Hello World from kfmd!");
-//   });
+  bindCommand(context, "kfmd.toggleColor", () => {
+    const current =
+      vscode.workspace
+        .getConfiguration("kfmd")
+        .get("enableShowBackgroundColor", true);
+
+
+    vscode.workspace
+      .getConfiguration("kfmd")
+      .update("enableShowBackgroundColor", !current, true);
+      triggerUpdateDecorations()
+      vscode.window.showInformationMessage("kfmd enableShowBackgroundColor: " + !current);
+  })
+
+  //   bindCommand(context, "kfmd.helloWorld", () => {
+  //     // The code you place here will be executed every time your command is executed
+  //     // Display a message box to the user
+  //     vscode.window.showInformationMessage("Hello World from kfmd!");
+  //   });
 
   bindCommand(context, "kfmd.DoneThisItem", toggleReplace);
   bindCommand(context, "kfmd.ToDoThisItem", toggleReplace);
 
-//   bindCommand(context, "kfmd.webview", () => {
-//     createPanel();
-//   });
+  //   bindCommand(context, "kfmd.webview", () => {
+  //     createPanel();
+  //   });
 
   initDecoration(context);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

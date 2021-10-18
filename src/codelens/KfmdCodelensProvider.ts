@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { bindDoneDecoration, bindTodoDecoration } from "../decoration/KfmdDecoration";
+import { bindDoneDecoration, bindTodoDecoration, triggerUpdateDecorations } from "../decoration/KfmdDecoration";
 
 
 const buildBasicCodeLens = (
@@ -108,14 +108,19 @@ export class KfmdCodelensProvider implements vscode.CodeLensProvider {
           );
           if (range) {
             bindTodoDecoration(range);
+
+            // FIXME
+            triggerUpdateDecorations()
           }
         } else if (doneRange) {
           const regRes = new RegExp(this.doneRegex).exec(line.text)!!;
           this.codeLenses.push(
             buildDoneCodeLens(doneRange, document, position, regRes)
-          );
-          if (range) {
+            );
+            if (range) {
             bindDoneDecoration(range);
+            // FIXME
+            triggerUpdateDecorations()
           }
         } else if (range) {
           this.codeLenses.push(

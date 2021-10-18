@@ -5,7 +5,7 @@
 	"publisher": "kfdykme",
 	"icon": "kfdykme.jpg",
 	"repository": "https://github.com/kfdykme/kfmd",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"engines": {
 		"vscode": "^1.61.0"
 	},
@@ -13,18 +13,22 @@
 		"Other"
 	],
 	"activationEvents": [
-        "onCommand:kfmd.active"
+		"onLanguage:markdown"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "kfmd.active",
-				"title": "Kfmd: active"
+				"title": "Kfmd: Active"
 			},
 			{
 				"command": "kfmd.disactive",
-				"title": "Kfmd: disactive"
+				"title": "Kfmd: Disactive"
+			},
+			{
+				"command": "kfmd.toggleColor",
+				"title": "Kfmd: Toggle Is Show Background Color"
 			},
 			{
 				"command": "kfmd.DoneThisItem",
@@ -34,6 +38,7 @@
 				"command": "kfmd.ToDoThisItem",
 				"title": "Kfmd: Todo This Line"
 			}
+
 		],
 		"configuration": {
             "properties": {
@@ -41,6 +46,18 @@
                     "type": "boolean",
                     "default": true
                 },
+				"kfmd.enableShowBackgroundColor": {
+					"type": "boolean",
+					"default": true
+				},
+				"kfmd.isWholeLine": {
+					"type": "boolean",
+					"default": false
+				},
+				"kfmd.decoration.showIcon": {
+					"type": "boolean",
+					"default": false
+				},
 				"kfmd.todoBackgroundColor": {
 					"type": "string",
 					"default": "#00bcd499"
