@@ -122,8 +122,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace
       .getConfiguration("kfmd")
       .update("enableShowBackgroundColor", !current, true);
-      triggerUpdateDecorations()
-      vscode.window.showInformationMessage("kfmd enableShowBackgroundColor: " + !current);
+    triggerUpdateDecorations()
+    vscode.window.showInformationMessage("kfmd enableShowBackgroundColor: " + !current);
   })
 
   //   bindCommand(context, "kfmd.helloWorld", () => {
@@ -135,6 +135,32 @@ export function activate(context: vscode.ExtensionContext) {
   bindCommand(context, "kfmd.DoneThisItem", toggleReplace);
   bindCommand(context, "kfmd.ToDoThisItem", toggleReplace);
 
+
+  bindCommand(context, "kfmd.setAsDefaultPath", () => {
+    const curDoc = vscode.window.activeTextEditor?.document
+    vscode.window.showInformationMessage(`${curDoc?.uri}`)
+    let uri = curDoc?.uri;
+    vscode.workspace
+      .getConfiguration("kfmd")
+      .update("configDefaultPath", `${curDoc!!.uri!!.path}`, vscode.ConfigurationTarget.Global);
+  })
+
+  bindCommand(context, "kfmd.openDefault", () => {
+    try {
+      var targetDoc = vscode.workspace
+      .getConfiguration("kfmd")
+      .get("configDefaultPath", "")
+      
+      vscode.window.showInformationMessage(`try open default: ${targetDoc}`)
+      vscode.workspace.openTextDocument(targetDoc)
+      .then(document => {
+        vscode.window.showTextDocument(document)
+      })
+    } catch (err) {
+      
+      vscode.window.showInformationMessage(`${err}`)
+    }
+  })
   //   bindCommand(context, "kfmd.webview", () => {
   //     createPanel();
   //   });

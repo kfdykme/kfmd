@@ -1,11 +1,11 @@
 {
-  "name": "kfmd",
+	"name": "kfmd",
 	"displayName": "kfmd",
 	"description": "a tool for markdown",
 	"publisher": "kfdykme",
 	"icon": "kfdykme.jpg",
 	"repository": "https://github.com/kfdykme/kfmd",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"engines": {
 		"vscode": "^1.61.0"
 	},
@@ -13,7 +13,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onLanguage:markdown"
+		"onLanguage:markdown",
+		"onCommand:kfmd.active"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -37,15 +38,22 @@
 			{
 				"command": "kfmd.ToDoThisItem",
 				"title": "Kfmd: Todo This Line"
+			},
+			{
+				"command": "kfmd.setAsDefaultPath",
+				"title": "Kfmd: Set As Default Document"
+			}, 
+			{
+				"command": "kfmd.openDefault",
+				"title": "Kfmd: Open Default Document"
 			}
-
 		],
 		"configuration": {
-            "properties": {
-                "kfmd.enableCodeLens": {
-                    "type": "boolean",
-                    "default": true
-                },
+			"properties": {
+				"kfmd.enableCodeLens": {
+					"type": "boolean",
+					"default": true
+				},
 				"kfmd.enableShowBackgroundColor": {
 					"type": "boolean",
 					"default": true
@@ -65,9 +73,13 @@
 				"kfmd.doneBackgroundColor": {
 					"type": "string",
 					"default": "#AD4045"
+				},
+				"kfmd.configDefaultPath": {
+					"type": "string",
+					"default": ""
 				}
-            }
-        }
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn run compile",

@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
-let todoBackgroundColor = "#00bcd499";
-let doneBackgroundColor = "#AD4045";
+let todoBackgroundColor = "#333";
+let doneBackgroundColor = "";
 let todoArr: vscode.DecorationOptions[] = [];
 let doneArr: vscode.DecorationOptions[] = [];
 
@@ -25,11 +25,8 @@ const createBasicKfmdLineDecoration = (backgroundColor: string, gutterIconPath: 
     },
     dark: {
       backgroundColor,
-      borderRadius: "4px",
       borderColor: backgroundColor,
-      borderSpacing: "4px",
       gutterIconPath: gutterIconPath,
-      letterSpacing: "2px",
     },
   });
 };
